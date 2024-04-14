@@ -1,11 +1,7 @@
 import AgeGroupPriceList from './components/AgeGroupPriceList';
 
 function App() {
-  return (
-    <div>
-      <AgeGroupPriceList />
-    </div>
-  );
+  return <AgeGroupPriceList onChange={(result) => console.log(result)} />;
 }
 
 export default App;

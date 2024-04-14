@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Field from './base/Field';
 import Group from './base/Group';
 import Input from './base/Input';
@@ -8,19 +7,21 @@ import { addComma } from '../utils';
 
 export default function PriceInput({
   name,
+  value,
+  onChange,
   className = '',
   errorMessage = '',
-  value = 0,
 }) {
-  const [price, setPrice] = useState(String(value));
-
-  const handleChange = ({ target }) => {
-    const number = addComma(target.value.replace(/,/g, ''));
-    if (number) {
-      setPrice(number);
-      return;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const price = addComma(value);
+    const target = { name };
+    if (price) {
+      target.value = price;
+    } else {
+      target.value = value;
     }
-    setPrice(target.value);
+    onChange({ target });
   };
 
   return (
@@ -30,7 +31,7 @@ export default function PriceInput({
         <Text>TWD</Text>
         <Input
           $isError={!!errorMessage}
-          value={price}
+          value={value}
           onChange={handleChange}
         />
       </Group>

@@ -1,4 +1,5 @@
-import Select, { StyledOption } from './StyledSelect';
+import Select from './Select';
+import { StyledOption } from './StyledSelect';
 
 export const SelectOption = StyledOption;
 export default Select;
