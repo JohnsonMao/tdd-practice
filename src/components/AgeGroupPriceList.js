@@ -11,7 +11,7 @@ export default function AgeGroupPriceList() {
           <h2 className="font-bold font-lg">價格設定 - 1</h2>
           <div className="flex gap-4">
             <AgeGroupSelect className="flex-1" />
-            <PriceInput className="flex-1" />
+            <PriceInput name="price" className="flex-1" />
           </div>
         </ListItem>
       </List>

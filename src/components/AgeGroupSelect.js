@@ -1,26 +1,76 @@
+import { useMemo, useState } from 'react';
 import Field from './base/Field';
 import Group from './base/Group';
 import Label from './base/Label';
-import Select from './base/Select';
+import Select, { SelectOption } from './base/Select';
 import Text from './base/Text';
 
-const options = new Array(20).fill(0).map((_, index) => ({
-  label: index + 1,
-  value: index + 1,
-}));
+export default function AgeGroupSelect({
+  className,
+  errorMessage = '',
+  min = 0,
+  max = 20,
+}) {
+  const [ageGroup, setAgeGroup] = useState([min, max]);
+  const options = useMemo(
+    () => new Array(max - min + 1).fill(0).map((_, index) => min + index),
+    [min, max]
+  );
 
-export default function AgeGroupSelect({ className }) {
+  const [startAge, endAge] = ageGroup;
+
+  const handleChange =
+    (index) =>
+    ({ target }) => {
+      console.log(ageGroup);
+      setAgeGroup((pre) => {
+        const updated = pre.concat();
+        updated[index] = Number(target.value);
+        return updated;
+      });
+    };
+
   return (
     <Field name="a" className={className}>
       <Label>年齡</Label>
       <Group>
-        <Select options={options} $isError />
+        <Select
+          $isError={!!errorMessage}
+          defaultValue={startAge}
+          onChange={handleChange(0)}
+        >
+          {options.map((option) => (
+            <SelectOption
+              key={option}
+              value={option}
+              disabled={endAge < option}
+            >
+              {option}
+            </SelectOption>
+          ))}
+        </Select>
         <Text>～</Text>
-        <Select options={options} $isError />
+        <Select
+          $isError={!!errorMessage}
+          defaultValue={endAge}
+          onChange={handleChange(1)}
+        >
+          {options.map((option) => (
+            <SelectOption
+              key={option}
+              value={option}
+              disabled={startAge > option}
+            >
+              {option}
+            </SelectOption>
+          ))}
+        </Select>
       </Group>
-      <Text className="p-2 font-bold rounded-sm" $isError>
-        年齡區間不可重疊
-      </Text>
+      {errorMessage && (
+        <Text className="p-2 font-bold rounded-sm" $isError>
+          {errorMessage}
+        </Text>
+      )}
     </Field>
   );
 }

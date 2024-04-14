@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components';
  */
 
 /** @type {import('styled-components').IStyledComponent<'web', StyledInputProps & import('react').HTMLAttributes>} */
-export const StyledSelect = styled.select`
+const StyledSelect = styled.select`
   position: relative;
   flex: 1;
   z-index: 1;
@@ -19,3 +19,5 @@ export const StyledSelect = styled.select`
 `;
 
 export const StyledOption = styled.option``;
+
+export default StyledSelect;
