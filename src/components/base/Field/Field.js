@@ -5,13 +5,13 @@ const FieldContext = createContext(null);
 
 export const useField = () => useContext(FieldContext);
 
-export default function Field({ children, name }) {
+export default function Field({ children, name, className }) {
   const id = useId();
   const value = { id, name };
 
   return (
     <FieldContext.Provider value={value}>
-      <StyledField>{children}</StyledField>
+      <StyledField className={className}>{children}</StyledField>
     </FieldContext.Provider>
   );
 }

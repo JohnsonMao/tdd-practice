@@ -1,12 +1,9 @@
-import PriceInput from './components/PriceInput';
-import './assets/reset.css';
-import './assets/variant.css';
-import './assets/utils.css';
+import AgeGroupPriceList from './components/AgeGroupPriceList';
 
 function App() {
   return (
     <div>
-      <PriceInput />
+      <AgeGroupPriceList />
     </div>
   );
 }

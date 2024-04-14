@@ -6,8 +6,10 @@ import styled, { css } from 'styled-components';
  */
 
 /** @type {import('styled-components').IStyledComponent<'web', StyledInputProps & import('react').HTMLAttributes>} */
-const StyledInput = styled.input`
+export const StyledSelect = styled.select`
+  position: relative;
   flex: 1;
+  z-index: 1;
   outline: none;
   ${(props) =>
     props.$isError &&
@@ -16,4 +18,4 @@ const StyledInput = styled.input`
     `}
 `;
 
-export default StyledInput;
+export const StyledOption = styled.option``;

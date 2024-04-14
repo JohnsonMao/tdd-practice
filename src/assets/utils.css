@@ -13,3 +13,23 @@
 .text-right {
   text-align: right;
 }
+
+.font-bold {
+  font-weight: bold;
+}
+
+.font-lg {
+  font-size: 1.25rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.gap-4 {
+  gap: var(--space);
+}
+
+.flex-1 {
+  flex: 1;
+}

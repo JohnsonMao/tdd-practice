@@ -1,9 +1,10 @@
 :root {
-  --primary-color: #0000cd;
-  --danger-color: #ff0000;
-  --danger-color-100: #ffeeee;
-  --gray-color-100: #eeeeee;
-  --gray-color-500: #777777;
+  --primary-color: #7acdc6;
+  --danger-color: #f57954;
+  --danger-color-100: #fbe9e7;
+  --gray-color-100: #f4f4f5;
+  --gray-color-300: #d4d4d8;
+  --gray-color-500: #71717a;
 
   --border-color: var(--gray-color-500);
   --border-width: 1px;
@@ -16,4 +17,7 @@
 
   --label-x-padding: 0;
   --label-y-padding: 0.8rem;
+
+  --list-item-x-padding: 0;
+  --list-item-y-padding: 0.8rem;
 }

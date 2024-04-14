@@ -7,6 +7,8 @@ import styled, { css } from 'styled-components';
 
 /** @type {import('styled-components').IStyledComponent<'web', StyledTextProps & import('react').HTMLAttributes>} */
 const StyledText = styled.p`
+  color: var(--gray-color-500);
+
   ${(props) =>
     props.$isError &&
     css`

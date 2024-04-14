@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import StyledText from '../Text/StyledText';
+import StyledInput from '../Input/StyledInput';
 
 const StyledGroup = styled.div`
   display: flex;
@@ -15,6 +16,10 @@ const StyledGroup = styled.div`
   }
   > ${StyledText} {
     background-color: var(--gray-color-100);
+  }
+  > ${StyledInput} {
+    position: relative;
+    z-index: 1;
   }
   :first-child {
     border-top-left-radius: var(--field-radius);
