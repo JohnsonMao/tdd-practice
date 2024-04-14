@@ -64,6 +64,32 @@ describe(`getNumberIntervals`, () => {
         notInclude: [[18, 20]],
       },
     },
+    {
+      intervals: [
+        [0, 7],
+        [10, 18],
+        [9, 20],
+      ],
+      expected: {
+        overlap: [[10, 18]],
+        notInclude: [[8, 8]],
+      },
+    },
+    {
+      intervals: [
+        [0, 7],
+        [1, 6],
+        [10, 18],
+        [9, 20],
+      ],
+      expected: {
+        overlap: [
+          [1, 6],
+          [10, 18],
+        ],
+        notInclude: [[8, 8]],
+      },
+    },
   ])(
     'should returns correct overlap and notInclude intervals',
     ({ intervals, expected }) => {
