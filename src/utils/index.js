@@ -6,10 +6,12 @@
  * @returns {string}
  */
 export const addComma = (number) => {
-  const value = String(number);
-  const numberRegExp = new RegExp('^-?\\d+(\\.\\d+)?$');
+  let value = String(number);
 
-  if (!numberRegExp.test(value)) return '';
+  if (!/^-?\d+(\.\d+)?$/.test(value)) return '';
+  if (/0\d/.test(value)) {
+    value = String(Number(value));
+  }
 
   const [integerPart, decimalPart] = value.split('.');
   const commaRegExp = new RegExp('\\B(?=(\\d{3})+$)', 'g');
@@ -43,6 +45,7 @@ export const getNumberIntervals = (
   intervals,
   { min, max } = { min: 0, max: 20 }
 ) => {
+  console.log(intervals);
   const sortedIntervals = intervals.concat().sort((a, b) => a[0] - b[0]);
   const overlap = [];
   const notInclude = [];
@@ -61,7 +64,7 @@ export const getNumberIntervals = (
 
       preventStart = sortedIntervals[i - 1][0];
       overlap.push([Math.max(preventStart, start), Math.min(preventEnd, end)]);
-    } else {
+    } else if (start > preventEnd + 1) {
       notInclude.push([preventEnd + 1, start - 1]);
     }
     preventEnd = end;
@@ -73,3 +76,12 @@ export const getNumberIntervals = (
 
   return { overlap, notInclude };
 };
+
+export function generateId() {
+  try {
+    const uuid = crypto.randomUUID();
+    return uuid;
+  } catch {
+    return String(Math.random());
+  }
+}
