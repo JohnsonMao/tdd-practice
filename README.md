@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-[Demo](https://JohnsonMao.github.io/tdd-practice)
+[Demo](https://johnsonmao.github.io/tdd-practice/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
