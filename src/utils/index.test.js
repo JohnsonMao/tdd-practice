@@ -1,4 +1,4 @@
-import { addComma } from '.';
+import { addComma, getNumberIntervals } from '.';
 
 describe(`addComma`, () => {
   it.each([
@@ -15,4 +15,49 @@ describe(`addComma`, () => {
   ])('should handle edge cases', (input, expected) => {
     expect(addComma(input)).toBe(expected);
   });
+});
+
+describe(`getNumberIntervals`, () => {
+  it.each([
+    {
+      intervals: [
+        [6, 11],
+        [5, 8],
+        [17, 20],
+        [7, 7],
+        [14, 17],
+      ],
+      expected: {
+        overlap: [
+          [6, 8],
+          [17, 17],
+        ],
+        notInclude: [
+          [0, 4],
+          [12, 13],
+        ],
+      },
+    },
+    {
+      intervals: [
+        [6, 11],
+        [5, 8],
+        [7, 7],
+        [14, 17],
+      ],
+      expected: {
+        overlap: [[6, 8]],
+        notInclude: [
+          [0, 4],
+          [12, 13],
+          [18, 20],
+        ],
+      },
+    },
+  ])(
+    'should returns correct overlap and notInclude intervals',
+    ({ intervals, expected }) => {
+      expect(getNumberIntervals(intervals)).toStrictEqual(expected);
+    }
+  );
 });
