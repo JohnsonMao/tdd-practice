@@ -1,0 +1,15 @@
+.rounded-sm {
+  border-radius: var(--border-radius);
+}
+
+.p-2 {
+  padding: calc(var(--space) / 2);
+}
+
+.mt-1 {
+  padding-top: calc(var(--space) / 4);
+}
+
+.text-right {
+  text-align: right;
+}

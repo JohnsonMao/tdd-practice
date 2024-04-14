@@ -1,0 +1,19 @@
+:root {
+  --primary-color: #0000cd;
+  --danger-color: #ff0000;
+  --danger-color-100: #ffeeee;
+  --gray-color-100: #eeeeee;
+  --gray-color-500: #777777;
+
+  --border-color: var(--gray-color-500);
+  --border-width: 1px;
+  --border-radius: 4px;
+  --space: 1rem;
+
+  --field-radius: var(--border-radius);
+  --field-x-padding: 0.8rem;
+  --field-y-padding: 1rem;
+
+  --label-x-padding: 0;
+  --label-y-padding: 0.8rem;
+}
