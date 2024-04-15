@@ -1,11 +1,13 @@
 import { addComma, getNumberIntervals, updateNestedValue } from '.';
 
 export function validatePrice({ name, value, setError }) {
-  if (value.trim() === '') {
+  const _value = String(value);
+
+  if (_value.trim() === '') {
     setError((pre) => updateNestedValue(pre, name, '不可以為空白'));
   } else if (addComma(value) === '') {
     setError((pre) => updateNestedValue(pre, name, '金額格式不正確'));
-  } else if (value[0] === '-') {
+  } else if (_value[0] === '-') {
     setError((pre) => updateNestedValue(pre, name, '不可以為負數'));
   } else {
     setError((pre) => updateNestedValue(pre, name, ''));

@@ -4,6 +4,7 @@ import Input from './base/Input';
 import Label from './base/Label';
 import Text from './base/Text';
 import { addComma } from '../utils';
+import { useMemo } from 'react';
 
 export default function PriceInput({
   name,
@@ -12,12 +13,18 @@ export default function PriceInput({
   className = '',
   errorMessage = '',
 }) {
+  const price = useMemo(() => {
+    const number = addComma(value);
+    if (number) return number;
+    return value;
+  }, [value]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const price = addComma(value);
+    const number = addComma(value);
     const target = { name };
-    if (price) {
-      target.value = price;
+    if (number) {
+      target.value = Number(number.replace(/,/g, ''));
     } else {
       target.value = value;
     }
@@ -31,7 +38,7 @@ export default function PriceInput({
         <Text>TWD</Text>
         <Input
           $isError={!!errorMessage}
-          value={value}
+          value={price}
           onChange={handleChange}
         />
       </Group>
