@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/tdd-practice/static/css/main.001eb369.css",
-    "main.js": "/tdd-practice/static/js/main.efe5b270.js",
+    "main.css": "/tdd-practice/static/css/main.9342172a.css",
+    "main.js": "/tdd-practice/static/js/main.8b175839.js",
     "index.html": "/tdd-practice/index.html",
-    "main.001eb369.css.map": "/tdd-practice/static/css/main.001eb369.css.map",
-    "main.efe5b270.js.map": "/tdd-practice/static/js/main.efe5b270.js.map"
+    "main.9342172a.css.map": "/tdd-practice/static/css/main.9342172a.css.map",
+    "main.8b175839.js.map": "/tdd-practice/static/js/main.8b175839.js.map"
   },
   "entrypoints": [
-    "static/css/main.001eb369.css",
-    "static/js/main.efe5b270.js"
+    "static/css/main.9342172a.css",
+    "static/js/main.8b175839.js"
   ]
 }
