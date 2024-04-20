@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import List, { ListItem } from './base/List';
 import Button from './base/Button';
 import AgeGroupSelect from './AgeGroupSelect';
@@ -6,6 +6,9 @@ import PriceInput from './PriceInput';
 import useFieldArray from '../hooks/useFieldArray';
 import { generateId, getNumberIntervals } from '../utils';
 import { validateAgeGroup, validatePrice } from '../utils/validate';
+
+const MemoAgeGroupSelect = memo(AgeGroupSelect);
+const MemoPriceInput = memo(PriceInput);
 
 const MIN = 0;
 const MAX = 20;
@@ -71,7 +74,7 @@ export default function AgeGroupPriceList({ onChange }) {
               )}
             </div>
             <div className="flex flex-wrap gap-4">
-              <AgeGroupSelect
+              <MemoAgeGroupSelect
                 className="flex-1"
                 min={MIN}
                 max={MAX}
@@ -80,7 +83,7 @@ export default function AgeGroupPriceList({ onChange }) {
                 value={item.ageGroup}
                 onChange={control.onChange}
               />
-              <PriceInput
+              <MemoPriceInput
                 className="flex-1"
                 name={`${index}.price`}
                 errorMessage={error?.[index]?.price}
