@@ -140,3 +140,22 @@ export const removeElementAtIndex = (index) => (list) => {
   updated.splice(index, 1);
   return updated;
 };
+
+/**
+ * 防抖
+ * @template T
+ * @template {T[]} P
+ * @param {(...props: P) => void} fn
+ * @param {number} delay
+ * @returns {(...props: P) => void}
+ */
+export const debounce = (fn, delay = 150) => {
+  let timer = null;
+
+  return (...props) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn(...props);
+    }, delay);
+  };
+};
