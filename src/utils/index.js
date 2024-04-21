@@ -32,6 +32,38 @@ export const addComma = (number) => {
  */
 
 /**
+ * 排序數字區間
+ * @param {Readonly<Interval[]>} intervals
+ * @returns {Interval[]}
+ */
+const sortIntervals = (intervals) =>
+  [...intervals].sort((a, b) => (a[0] === b[0] ? a[1] - b[1] : a[0] - b[0]));
+
+/**
+ * 合併重疊的數字區間
+ * @param {Readonly<Interval[]>} intervals
+ * @returns {Interval[]}
+ */
+const mergeIntervals = (intervals) => {
+  if (!intervals.length) return [];
+
+  const sortedIntervals = sortIntervals(intervals);
+  let prev = [...sortedIntervals[0]];
+  const result = [prev];
+
+  for (const [start, end] of intervals) {
+    if (start <= prev[1]) {
+      prev[1] = Math.max(prev[1], end);
+    } else {
+      const current = [start, end];
+      result.push(current);
+      prev = current;
+    }
+  }
+  return result;
+};
+
+/**
  * 找出重疊與未包含的數字區間
  * @example
  * getNumberIntervals([[6, 11], [5, 8], [17, 20], [7, 7], [14,17]]) // { overlap: [[6, 8], [17, 17]], notInclude: [[0, 4], [12, 13]] }
@@ -45,47 +77,35 @@ export const getNumberIntervals = (
   intervals,
   { min, max } = { min: 0, max: 20 }
 ) => {
-  const sortedIntervals = intervals.concat().sort((a, b) => a[0] - b[0]);
-  const overlap = [];
+  const sortedIntervals = sortIntervals(intervals);
+  const allOverlap = [];
   const notInclude = [];
-  let [preventStart, preventEnd] = sortedIntervals[0];
+  let [prevStart, prevEnd] = sortedIntervals[0];
 
-  if (preventStart > min) {
-    notInclude.push([min, preventStart - 1]);
+  if (prevStart > min) {
+    notInclude.push([min, prevStart - 1]);
   }
 
   for (let i = 1; i < sortedIntervals.length; i++) {
     const [start, end] = sortedIntervals[i];
-    if (start <= preventEnd) {
-      if (end <= preventEnd && overlap.length) {
-        for (const [overlapStart, overlapEnd] of overlap) {
-          if (end < overlapStart || start > overlapEnd) {
-            overlap.push([Math.max(preventStart, start), Math.min(preventEnd, end)]);
-            break;
-          }
-        }
-        preventEnd = Math.max(end, preventEnd);
-        continue;
-      }
-
-      preventStart = sortedIntervals[i - 1][0];
-      overlap.push([Math.max(preventStart, start), Math.min(preventEnd, end)]);
-    } else if (start > preventEnd + 1) {
-      notInclude.push([preventEnd + 1, start - 1]);
+    if (start <= prevEnd) {
+      prevStart = sortedIntervals[i - 1][0];
+      allOverlap.push([Math.max(prevStart, start), Math.min(prevEnd, end)]);
+    } else if (start > prevEnd + 1) {
+      notInclude.push([prevEnd + 1, start - 1]);
     }
-    preventEnd = Math.max(end, preventEnd);
+    prevEnd = Math.max(end, prevEnd);
   }
 
-  if (preventEnd < max) {
-    notInclude.push([preventEnd + 1, max]);
+  if (prevEnd < max) {
+    notInclude.push([prevEnd + 1, max]);
   }
-  return { overlap, notInclude };
+  return { overlap: mergeIntervals(allOverlap), notInclude };
 };
 
 export function generateId() {
   try {
-    const uuid = crypto.randomUUID();
-    return uuid;
+    return crypto.randomUUID();
   } catch {
     return String(Math.random());
   }
@@ -119,4 +139,23 @@ export const removeElementAtIndex = (index) => (list) => {
   const updated = list.concat();
   updated.splice(index, 1);
   return updated;
+};
+
+/**
+ * 防抖
+ * @template T
+ * @template {T[]} P
+ * @param {(...props: P) => void} fn
+ * @param {number} delay
+ * @returns {(...props: P) => void}
+ */
+export const debounce = (fn, delay = 150) => {
+  let timer = null;
+
+  return (...props) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn(...props);
+    }, delay);
+  };
 };

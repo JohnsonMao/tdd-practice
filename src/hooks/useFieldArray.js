@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { removeElementAtIndex, updateNestedValue } from '../utils';
+import { useCallback, useMemo, useState } from 'react';
+import { debounce, removeElementAtIndex, updateNestedValue } from '../utils';
 
 /**
  * @template T
@@ -19,41 +19,47 @@ import { removeElementAtIndex, updateNestedValue } from '../utils';
 export default function useFieldArray(defaultValue, validate) {
   const [data, setData] = useState(defaultValue);
   const [error, setError] = useState([]);
+  const debounceValidate = useMemo(() => debounce(validate), [validate]);
 
-  /** @param {T} value */
-  const append = (value) => {
-    setData((pre) => [...pre, value]);
-  };
+  const append = useCallback(
+    /** @param {T} value */
+    (value) => setData((pre) => [...pre, value]),
+    []
+  );
 
-  /** @param {number} index */
-  const remove = (index) => {
-    setError(removeElementAtIndex(index));
-    setData((pre) => {
-      const updated = removeElementAtIndex(index)(pre);
-      validate({ action: 'remove', data: updated, setError });
-      return updated;
-    });
-  };
-
-  const onChange = ({ target }) => {
-    const { name, value } = target;
-    setData((pre) => {
-      const updated = updateNestedValue(pre, name, value);
-
-      validate({
-        action: 'change',
-        data: updated,
-        name,
-        value,
-        setError,
+  const remove = useCallback(
+    /** @param {number} index */
+    (index) => {
+      setError(removeElementAtIndex(index));
+      setData((pre) => {
+        const updated = removeElementAtIndex(index)(pre);
+        debounceValidate({ action: 'remove', data: updated, setError });
+        return updated;
       });
-      return updated;
-    });
-  };
+    },
+    [debounceValidate]
+  );
 
-  const control = {
-    onChange,
-  };
+  const onChange = useCallback(
+    ({ target }) => {
+      const { name, value } = target;
+      setData((pre) => {
+        const updated = updateNestedValue(pre, name, value);
+
+        debounceValidate({
+          action: 'change',
+          data: updated,
+          name,
+          value,
+          setError,
+        });
+        return updated;
+      });
+    },
+    [debounceValidate]
+  );
+
+  const control = useMemo(() => ({ onChange }), [onChange]);
 
   return { data, control, error, append, remove };
 }
