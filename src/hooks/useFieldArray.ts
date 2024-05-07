@@ -1,35 +1,38 @@
-import { useCallback, useMemo, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react';
 import { debounce, removeElementAtIndex, updateNestedValue } from '../utils';
+import { Target } from '@/types';
 
-/**
- * @template T
- * @typedef ValidateProps
- * @prop {'change' | 'remove'} action
- * @prop {T[]} data
- * @prop {string} [name]
- * @prop {*} [value]
- * @prop {React.Dispatch<React.SetStateAction<{}>>} setError
- */
+interface ValidateProps<T, E> {
+  action: 'change' | 'remove';
+  data: T[];
+  name?: string;
+  value?: unknown;
+  setError: Dispatch<SetStateAction<E>>;
+}
 
-/**
- * @template T
- * @param {T[]} defaultValue
- * @param {(props: ValidateProps<T>) => void} validate
- */
-export default function useFieldArray(defaultValue, validate) {
+type ValidateFn<T, E> = (props: ValidateProps<T, E>) => void;
+
+export default function useFieldArray<T>(
+  defaultValue: T[],
+  validate: ValidateFn<T, unknown[]>
+) {
   const [data, setData] = useState(defaultValue);
-  const [error, setError] = useState([]);
+  const [error, setError] = useState<unknown[]>([]);
   const debounceValidate = useMemo(() => debounce(validate), [validate]);
 
   const append = useCallback(
-    /** @param {T} value */
-    (value) => setData((pre) => [...pre, value]),
+    (value: T) => setData((pre) => [...pre, value]),
     []
   );
 
   const remove = useCallback(
-    /** @param {number} index */
-    (index) => {
+    (index: number) => {
       setError(removeElementAtIndex(index));
       setData((pre) => {
         const updated = removeElementAtIndex(index)(pre);
@@ -41,7 +44,7 @@ export default function useFieldArray(defaultValue, validate) {
   );
 
   const onChange = useCallback(
-    ({ target }) => {
+    ({ target }: { target: Target<unknown> }) => {
       const { name, value } = target;
       setData((pre) => {
         const updated = updateNestedValue(pre, name, value);

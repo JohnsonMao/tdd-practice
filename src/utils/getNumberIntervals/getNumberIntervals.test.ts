@@ -1,24 +1,9 @@
-import { addComma, getNumberIntervals } from '.';
+/* eslint-env jest */
+import getNumberIntervals from './getNumberIntervals';
+import { GetNumberIntervalsResult, Interval } from './getNumberIntervals.type';
 
-describe(`addComma`, () => {
-  it.each([
-    [-7855948.9527, '-7,855,948.9527'],
-    [1234567890, '1,234,567,890'],
-    [0, '0'],
-    [0.38, '0.38'],
-  ])('should add comma to numbers', (input, expected) => {
-    expect(addComma(input)).toBe(expected);
-  });
-  it.each([
-    ['127.0.0.1', ''],
-    ['0987-654321', ''],
-  ])('should handle edge cases', (input, expected) => {
-    expect(addComma(input)).toBe(expected);
-  });
-});
-
-describe(`getNumberIntervals`, () => {
-  it.each([
+describe('getNumberIntervals', () => {
+  test.each<{ intervals: Interval[]; expected: GetNumberIntervalsResult }>([
     {
       intervals: [
         [6, 11],
@@ -101,10 +86,14 @@ describe(`getNumberIntervals`, () => {
         notInclude: [],
       },
     },
-  ])(
-    'should returns correct overlap and notInclude intervals',
-    ({ intervals, expected }) => {
-      expect(getNumberIntervals(intervals)).toStrictEqual(expected);
-    }
-  );
+    {
+      intervals: [],
+      expected: {
+        overlap: [],
+        notInclude: [],
+      },
+    },
+  ])('should return correct value', ({ intervals, expected }) => {
+    expect(getNumberIntervals(intervals)).toStrictEqual(expected);
+  });
 });

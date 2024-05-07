@@ -1,6 +1,6 @@
 import { ChangeEventHandler, FC, useMemo } from 'react';
 import { Row, Col, Input, Typography } from 'antd';
-import { addComma } from '@/utils';
+import addComma from '@/utils/addComma';
 
 import {
   StyledPriceInputWrapper,

@@ -1,7 +1,8 @@
 import { FC, memo, useEffect, useMemo } from 'react';
 import { Button, Col, List, Row, Typography } from 'antd';
 import useFieldArray from '@/hooks/useFieldArray';
-import { generateId, getNumberIntervals } from '@/utils';
+import getNumberIntervals from '@/utils/getNumberIntervals'
+import { generateId } from '@/utils';
 // import { validateAgeGroup, validatePrice } from '@/utils/validate';
 
 import AgeGroupSelect from '../AgeGroupSelect';
