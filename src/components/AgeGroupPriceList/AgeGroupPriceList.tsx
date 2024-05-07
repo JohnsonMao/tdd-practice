@@ -1,8 +1,9 @@
 import { FC, memo, useEffect, useMemo } from 'react';
 import { Button, Col, List, Row, Typography } from 'antd';
 import useFieldArray from '@/hooks/useFieldArray';
-import getNumberIntervals from '@/utils/getNumberIntervals'
+import getNumberIntervals from '@/utils/getNumberIntervals';
 import { generateId } from '@/utils';
+import type { WithId } from '@/types';
 // import { validateAgeGroup, validatePrice } from '@/utils/validate';
 
 import AgeGroupSelect from '../AgeGroupSelect';
@@ -18,7 +19,7 @@ const MemoPriceInput = memo(PriceInput);
 
 const MIN = 0;
 const MAX = 20;
-const defaultValues: (Value & { id: string })[] = [
+const defaultValues: WithId<Value>[] = [
   {
     id: generateId(),
     ageGroup: [MIN, MAX],
@@ -68,7 +69,7 @@ const AgeGroupPriceList: FC<AgeGroupPriceListProps> = ({ onChange }) => {
   return (
     <>
       <List
-        itemLayout='vertical'
+        itemLayout="vertical"
         dataSource={data}
         renderItem={(item, index) => (
           <List.Item>
