@@ -1,4 +1,6 @@
-import { addComma, getNumberIntervals, updateNestedValue } from '.';
+import addComma from './addComma';
+import getNumberIntervals from './getNumberIntervals';
+import { updateNestedValue } from '.';
 
 export function validatePrice({ name, value, setError }) {
   const _value = String(value);
