@@ -1,8 +1,5 @@
-export type Target<T> = {
-  name: string;
-  value: T;
-};
+export type IntervalType = [number, number];
 
-export type WithId<T> = {
+export type WithIdType<T> = {
   id: string;
 } & T;
