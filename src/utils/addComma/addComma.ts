@@ -1,28 +1,30 @@
-import type { AddCommaType } from './addComma.type';
+import type { AddCommaType, InvalidPriceType } from './addComma.type';
 
-const commaRegExp = new RegExp('\\B(?=(\\d{3})+$)', 'g');
+const numberRegExp = new RegExp(
+  '^(?<integerPart>-?[1-9]\\d*|\\d)(?<decimalPart>(\\.\\d*[1-9])?)$'
+);
+const findThousandsRegExp = new RegExp('\\B(?=(\\d{3})+$)', 'g');
 
-// TODO: 重構
+export const InvalidPrice: InvalidPriceType = 'Invalid Price';
+
 /**
  * 將金額加上千分位
- * @example addComma(-7855948.9527) => '-7,855,948.9527'
+ * @example
+ * addComma(-7855948.9527) => '-7,855,948.9527'
+ * addComma(127.0.0.1) => 'Invalid Price'
  */
 const addComma: AddCommaType = (price) => {
-  let value = String(price).replace(/,/g, '');
+  if (Number.isNaN(price)) return InvalidPrice;
 
-  if (!/^-?\d+(\.\d+)?$/.test(value)) return '';
-  if (/^0\d*/.test(value)) {
-    value = String(Number(value));
-  }
+  const value = String(price).trim().replace(/,/g, '');
+  const numberExecArray = numberRegExp.exec(value);
 
-  const [integerPart, decimalPart] = value.split('.');
-  const formattedIntegerPart = integerPart.replace(commaRegExp, ',');
+  if (!numberExecArray?.groups) return InvalidPrice;
 
-  if (decimalPart) {
-    return formattedIntegerPart + '.' + decimalPart;
-  }
+  const { integerPart, decimalPart } = numberExecArray.groups;
+  const formattedIntegerPart = integerPart.replace(findThousandsRegExp, ',');
 
-  return formattedIntegerPart;
-}
+  return `${formattedIntegerPart}${decimalPart}`;
+};
 
 export default addComma;

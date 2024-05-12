@@ -1,1 +1,1 @@
-export { default } from './addComma';
+export { default, InvalidPrice } from './addComma';
