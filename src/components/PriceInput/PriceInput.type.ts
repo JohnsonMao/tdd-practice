@@ -1,8 +1,11 @@
-import type { Target } from "@/types";
+import { ReactNode } from 'react';
 
 export interface PriceInputProps {
-  name: string;
-  value: number | string;
-  onChange?: (event: { target: Target<number | string> }) => void;
+  autoFocus?: boolean;
+  canDecimal?: boolean;
+  canNegative?: boolean;
+  defaultValue?: number;
   errorMessage?: string;
+  prefix?: ReactNode;
+  onChange?: (value: number) => void;
 }

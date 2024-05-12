@@ -1,10 +1,16 @@
-import type { Target } from "@/types";
+import type { IntervalType } from '@/types';
 
 export interface AgeGroupSelectProps {
-  name: string;
-  value: [number, number];
   min?: number;
   max?: number;
+  defaultValue?: IntervalType;
   errorMessage?: string;
-  onChange?: (event: { target: Target<number> }) => void;
+  onChange?: (value: IntervalType) => void;
 }
+
+export enum ACTION_TYPE {
+  UPDATE_START_VALUE,
+  UPDATE_END_VALUE,
+}
+
+export type HandleChangeType = (action: ACTION_TYPE) => (value: number) => void;
