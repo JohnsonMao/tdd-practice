@@ -1,9 +1,10 @@
 /* eslint-env jest */
 import getNumberIntervals from './getNumberIntervals';
-import { GetNumberIntervalsResult, Interval } from './getNumberIntervals.type';
+import type { IntervalType } from '@/types';
+import type { GetNumberIntervalsResult } from './getNumberIntervals.type';
 
 describe('getNumberIntervals', () => {
-  test.each<{ intervals: Interval[]; expected: GetNumberIntervalsResult }>([
+  test.each<{ intervals: IntervalType[]; expected: GetNumberIntervalsResult }>([
     {
       intervals: [
         [6, 11],
@@ -90,7 +91,7 @@ describe('getNumberIntervals', () => {
       intervals: [],
       expected: {
         overlap: [],
-        notInclude: [],
+        notInclude: [[0, 20]],
       },
     },
   ])('should return correct value', ({ intervals, expected }) => {

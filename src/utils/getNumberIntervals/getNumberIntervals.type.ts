@@ -1,4 +1,4 @@
-export type Interval = [number, number];
+import type { IntervalType } from '@/types';
 
 export interface GetNumberIntervalsOptions {
   min?: number;
@@ -6,17 +6,17 @@ export interface GetNumberIntervalsOptions {
 }
 
 export interface GetNumberIntervalsResult {
-  overlap: Interval[];
-  notInclude: Interval[];
+  overlap: IntervalType[];
+  notInclude: IntervalType[];
 }
 
-export type ToIntervalType = (interval: number[]) => Interval;
+export type CreateIntervalType = (n1: number, n2: number) => IntervalType;
 
 export type MergeIntervalsType = (
-  intervals: Readonly<Interval[]>
-) => Interval[];
+  intervals: Readonly<IntervalType[]>
+) => IntervalType[];
 
 export type GetNumberIntervalsType = (
-  intervals: Readonly<Interval[]>,
+  intervals: Readonly<IntervalType[]>,
   options?: GetNumberIntervalsOptions
 ) => GetNumberIntervalsResult;
